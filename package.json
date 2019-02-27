@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node bottles.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm i; node bottles.js > bottles.js.out; ruby bottles.rb > bottles.rb.out; diff -q bottles.*.out && echo 'FILES ARE THE SAME.'"
   },
   "keywords": [],
   "author": "",
