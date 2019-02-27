@@ -1,0 +1,17 @@
+{
+  "name": "99-bottles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bottles.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rx-helper": "^1.0.1",
+    "rxjs": "^6.4.0"
+  }
+}
