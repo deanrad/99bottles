@@ -1,9 +1,11 @@
 const Singer = require("rx-helper").agent;
 const { after } = require("rx-helper");
-const { range } = require("rxjs");
-const { map } = require("rxjs/operators");
+const { range, from } = require("rxjs");
+const { map, concatMap, delay } = require("rxjs/operators");
 
 const MAX = 9;
+const LETTER_DELAY = 30;
+const VERSE_DELAY = 800;
 // Singer.addFilter(({ action }) =>
 //   console.log(`${action.type}: ${action.payload}`)
 // );
@@ -22,13 +24,17 @@ Singer.on(
   "verse",
   ({ action }) => {
     const number = action.payload;
-    return after(1000, () => {
-      console.log(`${pluralOf(number, true)} of beer on the wall, ${pluralOf(
-        number
-      )} of beer.
+    //prettier-ignore
+    const message = `${pluralOf(number, true)} of beer on the wall, ${pluralOf(number)} of beer.
 ${ending(number)}
-`);
-    });
+
+`;
+    return from(message).pipe(
+      delay(VERSE_DELAY),
+      concatMap(letter =>
+        after(LETTER_DELAY, () => process.stdout.write(letter))
+      )
+    );
   },
   {
     concurrency: "serial"
