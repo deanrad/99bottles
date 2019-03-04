@@ -1,4 +1,5 @@
 const Singer = require("rx-helper").agent;
+const { after } = require("rx-helper");
 const { range } = require("rxjs");
 const { map } = require("rxjs/operators");
 
@@ -17,14 +18,22 @@ Singer.on(
   }
 );
 
-Singer.on("verse", ({ action }) => {
-  const number = action.payload;
-  console.log(`${pluralOf(number, true)} of beer on the wall, ${pluralOf(
-    number
-  )} of beer.
+Singer.on(
+  "verse",
+  ({ action }) => {
+    const number = action.payload;
+    return after(1000, () => {
+      console.log(`${pluralOf(number, true)} of beer on the wall, ${pluralOf(
+        number
+      )} of beer.
 ${ending(number)}
 `);
-});
+    });
+  },
+  {
+    concurrency: "serial"
+  }
+);
 
 function pluralOf(count, capital = false, noun = "bottle") {
   if (count >= 2) {
