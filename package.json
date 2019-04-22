@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node bottles.js",
+    "js": "node bottles.js",
+    "ruby": "ruby bottles.rb",
     "test": "npm i; node bottles.js > bottles.js.out; ruby bottles.rb > bottles.rb.out; diff -q bottles.*.out && echo 'FILES ARE THE SAME.'"
   },
   "keywords": [],
