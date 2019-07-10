@@ -1,22 +1,22 @@
-const Singer = require("rx-helper").agent;
+const { trigger, on } = require("rx-helper");
 const { after } = require("rx-helper");
 const { range, from } = require("rxjs");
 const { map, concatMap, delay } = require("rxjs/operators");
 
-const MAX = 9;
-const LETTER_DELAY = 30;
-const VERSE_DELAY = 400;
+const MAX_VERSES = 9;
+const LETTER_DELAY = process.env.LETTER_DELAY || 30;
+const VERSE_DELAY = process.env.VERSE_DELAY || 400;
 
-// Uncomment to print all actions, regardless of type (Regex /./ matches anything)
-// Singer.filter(/./, ({ action }) =>
-//   console.log(`${action.type}: ${action.payload}`)
+// Uncomment to print all events, regardless of type (Regex /./ matches anything)
+// filter(/./, ({ event }) =>
+//   console.log(`${event.type}: ${event.payload}`)
 // );
 
 // On being told 'singIt', all verses will be emitted as events effectively immediately
-Singer.on(
+on(
   "singIt",
-  ({ action }) => {
-    const verseCount = action.payload;
+  ({ event }) => {
+    const verseCount = event.payload;
     return range(0, verseCount + 1).pipe(map(i => verseCount - i));
   },
   {
@@ -30,10 +30,10 @@ Singer.on(
 // with our specified delaty. So we delay by VERSE_DELAY, then for each letter,
 // create an Observable of the printing of that letter. We combine the letter-printing
 // Observables with rxjs concatMap, which is rxjs lingo for 'serial'.
-Singer.on(
+on(
   "verse",
-  ({ action }) => {
-    const number = action.payload;
+  ({ event }) => {
+    const number = event.payload;
     //prettier-ignore
     const message = `${pluralOf(number, true)} of beer on the wall, ${pluralOf(number)} of beer.
 ${ending(number)}
@@ -71,4 +71,4 @@ function ending(number) {
 }
 
 // Kick it all off
-Singer.process({ type: "singIt", payload: MAX });
+trigger("singIt", MAX_VERSES);

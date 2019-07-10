@@ -20,7 +20,7 @@ To add delays after each letter, or verse, a `sleep` statement is all that's nee
 
 # JS
 
-The JS is done in an evented style - meaning events (aka actions) are triggered, and their handlers return Observables which either a) provide for consequences (aka side-effects) or b) return Observables of other events.
+The JS is done in an evented style - meaning events (aka events) are triggered, and their handlers return Observables which either a) provide for consequences (aka side-effects) or b) return Observables of other events.
 
 The source of [bottles.js](/deanius/99bottles/tree/master/bottles.js) is annotated with comments on how the code works.
 

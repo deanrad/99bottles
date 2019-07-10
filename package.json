@@ -7,13 +7,13 @@
     "start": "node bottles.js",
     "js": "node bottles.js",
     "ruby": "ruby bottles.rb",
-    "test": "npm i; node bottles.js > bottles.js.out; ruby bottles.rb > bottles.rb.out; diff -q bottles.*.out && echo 'FILES ARE THE SAME.'"
+    "test": "npm i; LETTER_DELAY=1 VERSE_DELAY=10 node bottles.js > bottles.js.out; ruby bottles.rb > bottles.rb.out; diff -q bottles.*.out && echo 'FILES ARE THE SAME.'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rx-helper": "^1.0.1",
+    "rx-helper": "^1.2.4",
     "rxjs": "^6.4.0"
   }
 }
